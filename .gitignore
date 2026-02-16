@@ -1,1 +1,5 @@
 Dataset
+runs
+__pycache__
+*.pyc
+*.pkl
