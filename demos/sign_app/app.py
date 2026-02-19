@@ -17,7 +17,6 @@ class_names = ['آ','ا','ب','پ', 'ت','ث','ج','چ','ح','خ',
               ]
 
 ### 2. Model and transforms preparation ###
-#Use This because we have split the Data into train/test folders
 data_transform = T.Compose([
     # Resize the image to 64x64 or 224x224
     T.Resize((224, 224)),
@@ -88,9 +87,9 @@ def predict(img) -> Tuple[Dict, float]:
 ### 4. Gradio app ###
 
 # Create title, description and article strings
-title = "FoodVision Mini 🍕🥩🍣"
-description = "An EfficientNetB2 feature extractor computer vision model to classify images of food as pizza, steak or sushi."
-article = "Created at [09. PyTorch Model Deployment](https://www.learnpytorch.io/09_pytorch_model_deployment/)."
+title = "Sign Language 🫣🤚🫲🖐️"
+description = "A MobileNet feature extractor computer vision model to classify images of Sign Language"
+
 
 # Create examples list from "examples/" directory
 example_list = [["examples/" + example] for example in os.listdir("examples")]
@@ -104,7 +103,7 @@ demo = gr.Interface(fn=predict, # mapping function from input to output
                     examples=example_list, 
                     title=title,
                     description=description,
-                    article=article)
+                    )
 
 # Launch the demo!
 demo.launch(pwa=True)
