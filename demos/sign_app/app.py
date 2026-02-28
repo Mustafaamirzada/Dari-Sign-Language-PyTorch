@@ -13,7 +13,7 @@ from typing import Tuple, Dict
 class_names = ['آ','ا','ب','پ', 'ت','ث','ج','چ','ح','خ',
                'د','ذ','ر','ز','ژ','س','ش','ص','ض','ط',
                'ظ','ع','غ','ف','ق','ک','گ','ل','لا','م',
-               'ن','و','ء','ها','ی'
+               'ن','و','ها','ء','ی'
               ]
 
 ### 2. Model and transforms preparation ###
@@ -49,10 +49,11 @@ weights = torchvision.models.EfficientNet_B2_Weights.DEFAULT
 transforms = weights.transforms()
 
 #  
-model = SignMobileNet(num_classes=35)
-PATH = "Pytorch_MyMobile_Net_Original_model.pt"
-state = torch.load(PATH, map_location='cpu', weights_only=True)
-model.load_state_dict(state)
+# model = SignMobileNet(num_classes=35)
+# PATH = "Pytorch_MyMobile_Net_Original_model.pt"
+PATH = "Script_MyMobile_Net_Original_model_224"
+model = torch.jit.load(PATH, map_location='cpu')
+# model.load_state_dict(state)
 model.eval()
 
 ### 3. Predict function ###
