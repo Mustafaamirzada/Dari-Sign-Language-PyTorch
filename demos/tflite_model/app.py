@@ -11,11 +11,11 @@ from typing import Tuple, Dict
 class_names = ['آ','ا','ب','پ', 'ت','ث','ج','چ','ح','خ',
                'د','ذ','ر','ز','ژ','س','ش','ص','ض','ط',
                'ظ','ع','غ','ف','ق','ک','گ','ل','لا','م',
-               'ن','و','ء','ها','ی'
+               'ن','و','ها','ء','ی'
               ]
 
 # Load TFLite model
-model_path = Path("MyMobile_Net_model.tflite")
+model_path = Path("Pytorch_MyMobile_Net_Original_model_224.tflite")
 if os.path.exists(model_path):
     print(f"✅ Model found: {model_path}")
     interpreter = tf.lite.Interpreter(model_path=model_path)
@@ -28,24 +28,19 @@ input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 print(input_details, output_details)
 
-input_shape = input_details[0]['shape']
-input_size = (input_shape[1], input_shape[2]) if len(input_shape) > 2 else (224, 224)
-
 def preprocess_image(img: Image.Image) -> np.ndarray:
     """Preprocess image for TFLite model"""
-    # Convert to RGB if needed
-    if img.mode != 'RGB':
-        img = img.convert('RGB')
-    
     # Resize
-    img = img.resize(input_size)
+    img = img.resize((224, 224))
     
     # Convert to numpy and normalize
     img_array = np.array(img).astype(np.float32) / 255.0
     
     # Add batch dimension
     img_array = np.expand_dims(img_array, axis=0)
-    imgInput = np.transpose(imgInput, (0, 3, 1, 2))
+    print(f"Before: {img_array.shape}")
+    imgInput = np.transpose(img_array, (0, 3, 1, 2))
+    print(f"After: {img_array.shape}")
     
     return imgInput
 
